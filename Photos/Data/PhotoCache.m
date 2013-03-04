@@ -58,7 +58,6 @@ static NSString const *kURLGetList = @"http://api.flickr.com/services/rest/?meth
         NSDictionary *entries = [[str objectFromJSONString] valueForKey:@"photos"];
         _totalPages = [[entries valueForKey:@"pages"] intValue];
         _totalImages = [[entries valueForKey:@"total"] intValue];
-        NSLog(@"Total images: %d",_totalImages);
         NSArray *items = [entries valueForKey:@"photo"];
         
         for (NSDictionary *item in items) {

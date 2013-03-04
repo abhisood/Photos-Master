@@ -10,6 +10,8 @@
 #import "ThumbnailTableViewCell.h"
 #import "FlikrPhoto.h"
 #import "PhotoCache.h"
+#import "ImageViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface ImageThumbnailViewController ()
 
@@ -73,6 +75,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
 }
 
 #pragma mark - Table view data source
@@ -145,9 +151,9 @@
             
             __block NSBlockOperation* bOpr = operation;
             [operation addExecutionBlock:^{
-                if (bOpr.isCancelled) {NSLog(@"Cancelled");return;}
+                if (bOpr.isCancelled) return;
                 [photo loadThumbnail];
-                if (bOpr.isCancelled) {NSLog(@"Cancelled");return;}
+                if (bOpr.isCancelled) return;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     imgView.hidden = NO;
                     imgView.alpha = 0;
@@ -192,7 +198,12 @@
 
 -(void)thumbnailCell:(ThumbnailTableViewCell *)cell didSelectImageAtIndex:(NSUInteger)index{
     int photoIndex = _numberOfImagesPerRow * cell.indexPath.row + index;
-    NSLog(@"CLicked index %d",photoIndex);
+    ImageViewController* imageVC = [[ImageViewController alloc] initWithNibName:@"ImageViewController" bundle:nil];
+    imageVC.photo = [self.photoCache photoForIndex:photoIndex];
+    imageVC.title = [NSString stringWithFormat:@"Photo %d of %d",photoIndex,self.photoCache.photoCount];
+
+    [self.navigationController pushViewController:imageVC animated:YES];
+    [imageVC release];
 }
 
 
