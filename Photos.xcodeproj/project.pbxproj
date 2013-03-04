@@ -31,6 +31,7 @@
 		5441292216E4D1460035B1EE /* ImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5441292016E4D1460035B1EE /* ImageViewController.xib */; };
 		5441292416E4D62C0035B1EE /* ImageViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5441292316E4D62C0035B1EE /* ImageViewController~iphone.xib */; };
 		5441292616E4D9B00035B1EE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5441292516E4D9B00035B1EE /* QuartzCore.framework */; };
+		5441292816E4DD310035B1EE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5441292716E4DD310035B1EE /* Default-568h@2x.png */; };
 		54B379AE16E4814B00DD0D41 /* FlickerImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B379A516E4814B00DD0D41 /* FlickerImageLoader.m */; };
 		54B379AF16E4814B00DD0D41 /* FlikrPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B379A716E4814B00DD0D41 /* FlikrPhoto.m */; };
 		54B379B016E4814B00DD0D41 /* PhotoCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B379A916E4814B00DD0D41 /* PhotoCache.m */; };
@@ -82,6 +83,7 @@
 		5441292016E4D1460035B1EE /* ImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageViewController.xib; sourceTree = "<group>"; };
 		5441292316E4D62C0035B1EE /* ImageViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "ImageViewController~iphone.xib"; sourceTree = "<group>"; };
 		5441292516E4D9B00035B1EE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		5441292716E4DD310035B1EE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		54B379A416E4814B00DD0D41 /* FlickerImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickerImageLoader.h; sourceTree = "<group>"; };
 		54B379A516E4814B00DD0D41 /* FlickerImageLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickerImageLoader.m; sourceTree = "<group>"; };
 		54B379A616E4814B00DD0D41 /* FlikrPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlikrPhoto.h; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 		3EBF31AD14EC92A500541A02 = {
 			isa = PBXGroup;
 			children = (
+				5441292716E4DD310035B1EE /* Default-568h@2x.png */,
 				3EBF31C214EC92A500541A02 /* Photos */,
 				3EBF31BB14EC92A500541A02 /* Frameworks */,
 				3EBF31B914EC92A500541A02 /* Products */,
@@ -289,6 +292,7 @@
 				3EBF31C714EC92A500541A02 /* InfoPlist.strings in Resources */,
 				5441292216E4D1460035B1EE /* ImageViewController.xib in Resources */,
 				5441292416E4D62C0035B1EE /* ImageViewController~iphone.xib in Resources */,
+				5441292816E4DD310035B1EE /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
