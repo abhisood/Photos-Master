@@ -14,7 +14,10 @@
 typedef void (^NextPageLoadSuccess)();
 typedef void (^NextPageLoadError)(NSError* error);
 
+
 @interface PhotoCache : NSObject{
+
+    @protected
     int _totalPages;
     int _totalImages;
     int _numberOfImagesPerPage;

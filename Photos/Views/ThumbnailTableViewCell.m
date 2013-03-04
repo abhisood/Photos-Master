@@ -38,7 +38,7 @@
     CGPoint point = [tap locationInView:self];
     int i =0;
     for (UIImageView* v in _imageViews) {
-        if (CGRectContainsPoint(v.frame, point)) {
+        if (!v.isHidden && CGRectContainsPoint(v.frame, point)) {
             [delegate thumbnailCell:self didSelectImageAtIndex:i];
             break;
         }
