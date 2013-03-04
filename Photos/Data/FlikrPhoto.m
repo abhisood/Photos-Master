@@ -31,31 +31,31 @@
 
 - (void)dealloc
 {
-    [self.imageId release];
-    [self.title release];
-    [self.image release];
-    [self.thumbnail release];
-    [self.imageURLString release];
-    [self.thumbnailURLString release];
+    [imageId release];
+    [title release];
+    [image release];
+    [thumbnail release];
+    [imageURLString release];
+    [thumbnailURLString release];
     [super dealloc];
 }
 
 #pragma mark ServerCommunication methods
 
 -(void)loadImage{
-    if (_imageRequested) {
-        return;
+    @synchronized(imageURLString){
+        if (!image) {            
+            image = [[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.imageURLString]]] retain];
+        }
     }
-    _imageRequested = YES;
-    image = [[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.imageURLString]]] retain];
 }
 
 -(void)loadThumbnail{
-    if (_thumbnailRequested) {
-        return;
+    @synchronized(thumbnailURLString){
+        if (!thumbnail) {
+            thumbnail = [[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.thumbnailURLString]]] retain];
+        }
     }
-    _thumbnailRequested = YES;
-    thumbnail = [[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.thumbnailURLString]]] retain];
 }
 
 @end

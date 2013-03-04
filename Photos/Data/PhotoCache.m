@@ -11,7 +11,7 @@
 #import "JSONKit.h"
 #import "FlikrPhoto.h"
 
-static NSString const *kURLGetList = @"http://api.flickr.com/services/rest/?method=flickr.interestingness.getList&api_key=ccb1a44ee5bbf5b72ab0aff810fbeb43&per_page=%d&format=json&nojsoncallback=1";
+static NSString const *kURLGetList = @"http://api.flickr.com/services/rest/?method=flickr.interestingness.getList&api_key=ccb1a44ee5bbf5b72ab0aff810fbeb43&per_page=%d&format=json&nojsoncallback=1&page=%d";
 
 
 @implementation PhotoCache
@@ -21,7 +21,7 @@ static NSString const *kURLGetList = @"http://api.flickr.com/services/rest/?meth
     if (self) {
         _currentPageNumber = 0;
         _totalPages = -1;
-        _numberOfImagesPerPage = 50;
+        _numberOfImagesPerPage = 100;
         _photoIndices = [[NSMutableDictionary alloc] init];
         _photos = [[NSMutableArray alloc] init];
     }
@@ -49,7 +49,7 @@ static NSString const *kURLGetList = @"http://api.flickr.com/services/rest/?meth
     
     _currentPageNumber++;
     
-    NSString* url = [NSString stringWithFormat:[kURLGetList copy],_numberOfImagesPerPage];
+    NSString* url = [NSString stringWithFormat:[[kURLGetList copy] autorelease],_numberOfImagesPerPage,_currentPageNumber];
     ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:url]];
     
     __block PhotoCache* bself = self;
@@ -58,6 +58,7 @@ static NSString const *kURLGetList = @"http://api.flickr.com/services/rest/?meth
         NSDictionary *entries = [[str objectFromJSONString] valueForKey:@"photos"];
         _totalPages = [[entries valueForKey:@"pages"] intValue];
         _totalImages = [[entries valueForKey:@"total"] intValue];
+        NSLog(@"Total images: %d",_totalImages);
         NSArray *items = [entries valueForKey:@"photo"];
         
         for (NSDictionary *item in items) {

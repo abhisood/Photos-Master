@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface FlikrPhoto : NSObject{
-    bool _imageRequested, _thumbnailRequested;
 }
 
 @property(nonatomic, readonly, retain) UIImage *thumbnail;

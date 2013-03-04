@@ -9,7 +9,6 @@
 #import "ViewController.h"
 #import "PhotoCache.h"
 #import "FlikrPhoto.h"
-#import "ImageScrollViewController.h"
 
 @implementation ViewController
 
@@ -35,12 +34,12 @@
 	// Do any additional setup after loading the view, typically from a nib.
     _photoCache = [[PhotoCache alloc] init];
     [self loadNextPage];
-    _imageScrollVC = [[ImageScrollViewController alloc] initWithNibName:@"ImageScrollViewController" bundle:nil];
-    _imageScrollVC.photoCache = _photoCache;
-    [self addChildViewController:_imageScrollVC];
-    _imageScrollVC.view.frame = self.referenceView.frame;
-    [self.view addSubview:_imageScrollVC.view];
-    [_imageScrollVC didMoveToParentViewController:self];
+//    _imageScrollVC = [[ImageScrollViewController alloc] initWithNibName:@"ImageScrollViewController" bundle:nil];
+//    _imageScrollVC.photoCache = _photoCache;
+//    [self addChildViewController:_imageScrollVC];
+//    _imageScrollVC.view.frame = self.referenceView.frame;
+//    [self.view addSubview:_imageScrollVC.view];
+//    [_imageScrollVC didMoveToParentViewController:self];
 }
 
 - (void)viewDidUnload
@@ -80,13 +79,13 @@
 
 -(void)loadNextPage{
     [_photoCache loadNextPageWithSuccessBlock:^{
-        [_imageScrollVC.tableView reloadData];
+//        [_imageScrollVC.tableView reloadData];
     } andErrorBlock:^(NSError *error) {
         NSLog(@"%@",[error description]);
     }];
 }
 
 -(void)refresh:(id)sender{
-    [_imageScrollVC.tableView reloadData];
+//    [_imageScrollVC.tableView reloadData];
 }
 @end
