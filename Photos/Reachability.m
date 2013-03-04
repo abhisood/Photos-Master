@@ -161,13 +161,13 @@ static void logNetworkStatus_(const char *name, int line, NetworkStatus status) 
 	
 	switch (status) {
 		case kNotReachable:
-			statusString = [NSString stringWithString: @"Not Reachable"];
+			statusString = @"Not Reachable";
 			break;
 		case kReachableViaWWAN:
-			statusString = [NSString stringWithString: @"Reachable via WWAN"];
+			statusString = @"Reachable via WWAN";
 			break;
 		case kReachableViaWiFi:
-			statusString = [NSString stringWithString: @"Reachable via WiFi"];
+			statusString = @"Reachable via WiFi";
 			break;
 	}
 	
@@ -255,7 +255,7 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 	
 	//We're on the main RunLoop, so an NSAutoreleasePool is not necessary, but is added defensively
 	// in case someone uses the Reachablity object in a different thread.
-	NSAutoreleasePool* pool = [NSAutoreleasePool new];
+	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 	
 	// Post a notification to notify the client that the network reachability changed.
 	[[NSNotificationCenter defaultCenter] postNotificationName: kReachabilityChangedNotification 

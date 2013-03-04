@@ -8,13 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@class PhotoCache;
+@class ImageScrollViewController;
+
 @interface ViewController : UIViewController
 {
     @private
-    IBOutlet UIScrollView *scrollView_;
+    NSOperationQueue* _queue;
+    PhotoCache* _photoCache;
+    ImageScrollViewController* _imageScrollVC;
 }
 
-@property (nonatomic, retain) IBOutlet UIScrollView *scrollView_;
+@property (nonatomic, retain) IBOutlet UIView *referenceView;
 
 - (IBAction)refresh:(id)sender;
 

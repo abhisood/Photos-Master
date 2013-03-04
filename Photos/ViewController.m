@@ -7,16 +7,24 @@
 //
 
 #import "ViewController.h"
-#import "ASIHTTPRequest.h"
-#import "JSONKit.h"
+#import "PhotoCache.h"
+#import "FlikrPhoto.h"
+#import "ImageScrollViewController.h"
 
 @implementation ViewController
-@synthesize scrollView_;
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Release any cached data, images, etc that aren't in use.
+}
+
+-(void)dealloc{
+    [_queue cancelAllOperations];
+    [_queue release];
+    [_photoCache release];
+    [_imageScrollVC release];
+    [super dealloc];
 }
 
 #pragma mark - View lifecycle
@@ -25,8 +33,14 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    
-    [self refresh:nil];
+    _photoCache = [[PhotoCache alloc] init];
+    [self loadNextPage];
+    _imageScrollVC = [[ImageScrollViewController alloc] initWithNibName:@"ImageScrollViewController" bundle:nil];
+    _imageScrollVC.photoCache = _photoCache;
+    [self addChildViewController:_imageScrollVC];
+    _imageScrollVC.view.frame = self.referenceView.frame;
+    [self.view addSubview:_imageScrollVC.view];
+    [_imageScrollVC didMoveToParentViewController:self];
 }
 
 - (void)viewDidUnload
@@ -34,8 +48,6 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    
-    self.scrollView_ = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -64,64 +76,17 @@
     return YES;
 }
 
+#pragma mark networkLoading
 
-- (IBAction)refresh:(id)sender
-{
-    NSInteger imagePerPage = 100;
-    
-    NSString *url = [NSString stringWithFormat:@"http://api.flickr.com/services/rest/?method=flickr.interestingness.getList&api_key=ccb1a44ee5bbf5b72ab0aff810fbeb43&per_page=%d&format=json&nojsoncallback=1", imagePerPage];
-    
-    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:url]];
-    
-    [request setCompletionBlock:^{
-        //NSLog(@"%@", [request responseString]);
-        
-        NSString *str = [request responseString];
-        NSDictionary *entries = [[str objectFromJSONString] valueForKey:@"photos"];
-        
-        NSArray *items = [entries valueForKey:@"photo"];
-        
-        CGFloat imageViewSize = 100.0f;
-        CGFloat offset = self.view.frame.size.width * 0.1f;
-        CGFloat x = offset;
-        CGFloat y = offset;
-        // Print the url of the images to load
-        for (NSDictionary *item in items) {
-            //http://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}_[mstzb].jpg
-            NSString *farm = [item valueForKey:@"farm"];
-            NSString *server = [item valueForKey:@"server"];
-            NSString *secret = [item valueForKey:@"secret"];
-            NSString *img_id = [item valueForKey:@"id"];
-            NSString *imgURL = [NSString stringWithFormat:@"http://farm%@.staticflickr.com/%@/%@_%@_%@.jpg", farm, server, img_id, secret, @"t"];
-            //NSLog(@"%@", imgURL);
-            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(x, y, imageViewSize, imageViewSize)];
-            iv.backgroundColor = [UIColor grayColor];
-            [self.scrollView_ addSubview:iv];
-            
-            
-            UIImage *img = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]]];
-            iv.image = img;
-            
-            x += iv.frame.size.width + offset;
-            
-            if (x >= (self.view.frame.size.width)) {
-                x = offset;
-                y += offset + iv.frame.size.width;
-            }
-            
-            [iv release];
-        }
-        
-        CGFloat height = (y > self.scrollView_.frame.size.height) ? y : self.scrollView_.frame.size.height;
-        self.scrollView_.contentSize = CGSizeMake(self.scrollView_.frame.size.width, height);
+-(void)loadNextPage{
+    [_photoCache loadNextPageWithSuccessBlock:^{
+        [_imageScrollVC.tableView reloadData];
+    } andErrorBlock:^(NSError *error) {
+        NSLog(@"%@",[error description]);
     }];
-    
-    [request setFailedBlock:^{
-        NSLog(@"Error %@", [[request error] description]);
-    }];
-    
-    [request startAsynchronous];
-
 }
 
+-(void)refresh:(id)sender{
+    [_imageScrollVC.tableView reloadData];
+}
 @end

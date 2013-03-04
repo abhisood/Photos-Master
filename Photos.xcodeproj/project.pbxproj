@@ -29,6 +29,13 @@
 		3EBF31FE14EC934700541A02 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EBF31FD14EC934700541A02 /* MobileCoreServices.framework */; };
 		3EBF320014EC936200541A02 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EBF31FF14EC936200541A02 /* libz.dylib */; };
 		3EBF320314EC9E9A00541A02 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBF320214EC9E9A00541A02 /* JSONKit.m */; };
+		54B379AA16E4814B00DD0D41 /* ImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B3799E16E4814B00DD0D41 /* ImageCell.m */; };
+		54B379AB16E4814B00DD0D41 /* ImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54B3799F16E4814B00DD0D41 /* ImageCell.xib */; };
+		54B379AC16E4814B00DD0D41 /* ImageScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B379A116E4814B00DD0D41 /* ImageScrollViewController.m */; };
+		54B379AD16E4814B00DD0D41 /* ImageScrollViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54B379A216E4814B00DD0D41 /* ImageScrollViewController.xib */; };
+		54B379AE16E4814B00DD0D41 /* FlickerImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B379A516E4814B00DD0D41 /* FlickerImageLoader.m */; };
+		54B379AF16E4814B00DD0D41 /* FlikrPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B379A716E4814B00DD0D41 /* FlikrPhoto.m */; };
+		54B379B016E4814B00DD0D41 /* PhotoCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B379A916E4814B00DD0D41 /* PhotoCache.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +80,18 @@
 		3EBF31FF14EC936200541A02 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3EBF320114EC9E9900541A02 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		3EBF320214EC9E9A00541A02 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		54B3799D16E4814B00DD0D41 /* ImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCell.h; sourceTree = "<group>"; };
+		54B3799E16E4814B00DD0D41 /* ImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCell.m; sourceTree = "<group>"; };
+		54B3799F16E4814B00DD0D41 /* ImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageCell.xib; sourceTree = "<group>"; };
+		54B379A016E4814B00DD0D41 /* ImageScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageScrollViewController.h; sourceTree = "<group>"; };
+		54B379A116E4814B00DD0D41 /* ImageScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageScrollViewController.m; sourceTree = "<group>"; };
+		54B379A216E4814B00DD0D41 /* ImageScrollViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageScrollViewController.xib; sourceTree = "<group>"; };
+		54B379A416E4814B00DD0D41 /* FlickerImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickerImageLoader.h; sourceTree = "<group>"; };
+		54B379A516E4814B00DD0D41 /* FlickerImageLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickerImageLoader.m; sourceTree = "<group>"; };
+		54B379A616E4814B00DD0D41 /* FlikrPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlikrPhoto.h; sourceTree = "<group>"; };
+		54B379A716E4814B00DD0D41 /* FlikrPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlikrPhoto.m; sourceTree = "<group>"; };
+		54B379A816E4814B00DD0D41 /* PhotoCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCache.h; sourceTree = "<group>"; };
+		54B379A916E4814B00DD0D41 /* PhotoCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCache.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +155,8 @@
 		3EBF31C214EC92A500541A02 /* Photos */ = {
 			isa = PBXGroup;
 			children = (
+				54B3799C16E4814B00DD0D41 /* Views */,
+				54B379A316E4814B00DD0D41 /* Data */,
 				3E9D1CD214F5D74900F4770D /* JSONKit */,
 				3EBF31D914EC92F200541A02 /* ASI */,
 				3EBF31CB14EC92A500541A02 /* AppDelegate.h */,
@@ -186,6 +207,32 @@
 				3EBF31ED14EC931B00541A02 /* ASIProgressDelegate.h */,
 			);
 			name = ASI;
+			sourceTree = "<group>";
+		};
+		54B3799C16E4814B00DD0D41 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				54B3799D16E4814B00DD0D41 /* ImageCell.h */,
+				54B3799E16E4814B00DD0D41 /* ImageCell.m */,
+				54B3799F16E4814B00DD0D41 /* ImageCell.xib */,
+				54B379A016E4814B00DD0D41 /* ImageScrollViewController.h */,
+				54B379A116E4814B00DD0D41 /* ImageScrollViewController.m */,
+				54B379A216E4814B00DD0D41 /* ImageScrollViewController.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		54B379A316E4814B00DD0D41 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				54B379A416E4814B00DD0D41 /* FlickerImageLoader.h */,
+				54B379A516E4814B00DD0D41 /* FlickerImageLoader.m */,
+				54B379A616E4814B00DD0D41 /* FlikrPhoto.h */,
+				54B379A716E4814B00DD0D41 /* FlikrPhoto.m */,
+				54B379A816E4814B00DD0D41 /* PhotoCache.h */,
+				54B379A916E4814B00DD0D41 /* PhotoCache.m */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -240,6 +287,8 @@
 			files = (
 				3EBF31C714EC92A500541A02 /* InfoPlist.strings in Resources */,
 				3EBF31D314EC92A500541A02 /* ViewController.xib in Resources */,
+				54B379AB16E4814B00DD0D41 /* ImageCell.xib in Resources */,
+				54B379AD16E4814B00DD0D41 /* ImageScrollViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +312,11 @@
 				3EBF31F514EC931B00541A02 /* ASINetworkQueue.m in Sources */,
 				3EBF31F814EC932800541A02 /* Reachability.m in Sources */,
 				3EBF320314EC9E9A00541A02 /* JSONKit.m in Sources */,
+				54B379AA16E4814B00DD0D41 /* ImageCell.m in Sources */,
+				54B379AC16E4814B00DD0D41 /* ImageScrollViewController.m in Sources */,
+				54B379AE16E4814B00DD0D41 /* FlickerImageLoader.m in Sources */,
+				54B379AF16E4814B00DD0D41 /* FlikrPhoto.m in Sources */,
+				54B379B016E4814B00DD0D41 /* PhotoCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
