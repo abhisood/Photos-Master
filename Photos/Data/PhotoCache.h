@@ -39,4 +39,6 @@ typedef void (^NextPageLoadError)(NSError* error);
 -(FlikrPhoto*) photoForIndex:(NSUInteger)idx;
 -(NSUInteger)photoCount;
 
+-(void)clearCache;
+
 @end

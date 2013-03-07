@@ -113,4 +113,12 @@ static NSString const *kURLGetList = @"http://api.flickr.com/services/rest/?meth
     return _photos.count;
 }
 
+-(void)clearCache{
+    NSLog(@"Clearing cache");
+    for (FlikrPhoto* p in _photos) {
+        [p unloadThumbnail];
+        [p unloadImage];
+    }
+}
+
 @end

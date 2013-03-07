@@ -9,6 +9,51 @@
 #import "ThumbnailTableViewCell.h"
 #import <QuartzCore/QuartzCore.h>
 
+@interface ThumbnailImageLayer ()
+
+@end
+
+
+@implementation ThumbnailImageLayer
+
+@synthesize imageLayer = _imageLayer;
+@synthesize shadowLayer = _shadowLayer;
+
+-(id)init{
+    if (self = [super init]) {
+        _shadowLayer = [[CALayer layer] retain];
+        _shadowLayer.backgroundColor = [UIColor blackColor].CGColor;
+        _shadowLayer.borderColor = [UIColor whiteColor].CGColor;
+        _shadowLayer.borderWidth = 2.0;
+        [self addSublayer:_shadowLayer];
+        
+        _imageLayer = [[CALayer layer] retain];
+        [_shadowLayer addSublayer:_imageLayer];
+        
+        _shadowLayer.opaque = YES;
+        _imageLayer.opaque = YES;
+    }
+    return self;
+}
+
+-(void)dealloc{
+    [_imageLayer release];
+    [_shadowLayer release];
+    [super dealloc];
+}
+
+-(void)setFrame:(CGRect)frame{
+    [super setFrame:frame];
+    self.imageLayer.frame = self.bounds;
+    self.shadowLayer.frame = self.bounds;
+}
+
+@end
+
+
+
+
+
 @implementation ThumbnailTableViewCell
 
 @synthesize rowHeight = _rowHeight;
@@ -21,7 +66,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        _imageViews = [NSMutableArray new];
+        _imageLayers = [NSMutableArray new];
         self.rowHeight = 100;
         self.insets = UIEdgeInsetsMake(5, 10, 5, 10);
         loadImageOperations = [NSMutableArray new];
@@ -37,7 +82,7 @@
 -(void)cellTapped:(UITapGestureRecognizer*)tap{
     CGPoint point = [tap locationInView:self];
     int i =0;
-    for (UIImageView* v in _imageViews) {
+    for (CALayer* v in _imageLayers) {
         if (!v.isHidden && CGRectContainsPoint(v.frame, point)) {
             [delegate thumbnailCell:self didSelectImageAtIndex:i];
             break;
@@ -48,7 +93,7 @@
 
 -(void)dealloc{
     [loadImageOperations release];
-    [_imageViews release];
+    [_imageLayers release];
     [super dealloc];
 }
 
@@ -66,16 +111,11 @@
 
 -(void)setNumberOfImages:(int)numberOfImages{
     _numberOfImages = numberOfImages;
-    if (_numberOfImages > [_imageViews count]) {
-        for (int i = [_imageViews count]; i<_numberOfImages; i++) {
-            UIImageView* imView = [[[UIImageView alloc] init] autorelease];
-            [_imageViews addObject:imView];
-            imView.contentMode = UIViewContentModeScaleAspectFill;
-            imView.clipsToBounds = YES;
-            [imView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
-            [imView.layer setBorderWidth: 2.0];
-            [self addSubview:imView];
-            imView.userInteractionEnabled = NO;
+    if (_numberOfImages > [_imageLayers count]) {
+        for (int i = [_imageLayers count]; i<_numberOfImages; i++) {
+            ThumbnailImageLayer *layer = [ThumbnailImageLayer layer];
+            [self.layer addSublayer:layer];
+            [_imageLayers addObject:layer];
         }
     }
     [self setNeedsLayout];
@@ -86,22 +126,20 @@
     [self setNeedsLayout];
 }
 
--(void)setImages:(NSArray *)images{
-    for (UIImageView* view in _imageViews) {
-        view.image = nil;
-        view.hidden = YES;
-    }
-
-    int minCount = images.count < _imageViews.count? images.count: _imageViews.count;
-    for (int i =0; i<minCount; i++) {
-        UIImageView* view = _imageViews[i];
-        view.image = images[i];
-        view.hidden = NO;
+-(void)hideAllImages{
+    for (CALayer* v in self.layer.sublayers) {
+        v.hidden = YES;
     }
 }
 
--(UIImageView *)imageViewForIndex:(NSUInteger)index{
-    return _imageViews[index];
+-(void)setImage:(UIImage *)image forLayerAtIndex:(NSUInteger)index{
+    ThumbnailImageLayer* layer = _imageLayers[index];
+    if (image) {
+        layer.imageLayer.contents = (id)image.CGImage;
+    }else{
+        layer.imageLayer.contents = nil;
+    }
+    layer.hidden = !image;
 }
 
 -(void)layoutSubviews{
@@ -113,10 +151,13 @@
     
     CGFloat x = self.insets.left;
     CGFloat y = self.insets.top;
-    for (UIImageView* view in _imageViews) {
-        view.frame = CGRectMake(x, y, imageViewWidth, imageViewHeight);
+    for (CALayer* layer in _imageLayers) {
+        layer.frame = CGRectMake(x, y, imageViewWidth, imageViewHeight);
         x += (imageViewWidth + gap);
     }
 }
 
+-(ThumbnailImageLayer *)layerForIndex:(NSUInteger)index{
+    return _imageLayers[index];
+}
 @end

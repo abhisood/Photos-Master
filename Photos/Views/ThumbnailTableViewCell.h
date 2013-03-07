@@ -7,6 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
+
+@interface ThumbnailImageLayer: CALayer{
+    CALayer* _imageLayer;
+    CALayer* _shadowLayer;
+}
+
+@property(nonatomic,readonly,retain) CALayer* imageLayer;
+@property(nonatomic,readonly,retain) CALayer* shadowLayer;
+
+
+@end
+
 
 @class ThumbnailTableViewCell;
 
@@ -17,7 +30,7 @@
 @end
 
 @interface ThumbnailTableViewCell : UITableViewCell{
-    NSMutableArray* _imageViews;
+    NSMutableArray* _imageLayers;
     int _numberOfImages;
     UIEdgeInsets _insets;
     CGFloat _rowHeight;
@@ -30,7 +43,8 @@
 @property(nonatomic,retain)NSIndexPath* indexPath;
 @property(nonatomic,assign)id<ThumbnailTableViewCellDelegate> delegate;
 
--(void)setImages:(NSArray*)images;
--(UIImageView*)imageViewForIndex:(NSUInteger)index;
+-(void)hideAllImages;
+-(void)setImage:(UIImage*)image forLayerAtIndex:(NSUInteger)index;
+-(ThumbnailImageLayer*)layerForIndex:(NSUInteger)index;
 
 @end

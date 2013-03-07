@@ -58,4 +58,18 @@
     }
 }
 
+-(void)unloadImage{
+    @synchronized(imageURLString){
+        [image release];
+        image = nil;
+    }
+}
+
+-(void)unloadThumbnail{
+    @synchronized(thumbnailURLString){
+        [thumbnail release];
+        thumbnail = nil;
+    }
+}
+
 @end

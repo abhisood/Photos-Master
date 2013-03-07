@@ -28,5 +28,8 @@
 // load thumbnail from server, blocking
 -(void)loadThumbnail;
 
+-(void)unloadImage;
+-(void)unloadThumbnail;
+
 
 @end

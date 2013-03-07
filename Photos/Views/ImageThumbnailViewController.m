@@ -55,7 +55,7 @@ static bool LoadThumbs = YES;
     UIButton* toggleButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 35, 35)];
     [toggleButton addTarget:self action:@selector(toggleImageLoad) forControlEvents:UIControlEventTouchUpInside];
     toggleButton.backgroundColor = [UIColor clearColor];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:toggleButton];
+    self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:toggleButton] autorelease];
 
     
     _rowHeight = 100;
@@ -86,7 +86,7 @@ static bool LoadThumbs = YES;
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.photoCache clearCache];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -140,7 +140,7 @@ static bool LoadThumbs = YES;
     }
     //    [cell.activityIndicator startAnimating];
     //    cell.activityIndicator.hidden = NO;
-    [cell setImages:nil];
+    [cell hideAllImages];
     NSArray* photos = [self getPhotosForIndexPath:indexPath];
     cell.indexPath = indexPath;
     [self configureCell:cell forPhotos:photos loadThumbnails:LoadThumbs];
@@ -166,13 +166,14 @@ static bool LoadThumbs = YES;
             oldOperation = [[[cell.loadImageOperations objectAtIndex:i] retain] autorelease];
             [oldOperation cancel];
         }
-        UIImageView* imgView = [cell imageViewForIndex:i];
-        imgView.hidden = YES;
+        ThumbnailImageLayer* thumbLayer = [cell layerForIndex:i];
+        [CATransaction setDisableActions:YES];
+        thumbLayer.hidden = YES;
         UIImage* img = [photo performSelector:getterSelector];
         if (img) {
-            imgView.image = img;
-            imgView.hidden = NO;
-            imgView.alpha = 1;
+            thumbLayer.imageLayer.contents = (id)img.CGImage;
+            thumbLayer.hidden = NO;
+            thumbLayer.opacity = 1;
         }else{
             NSBlockOperation* operation = [[[NSBlockOperation alloc] init] autorelease];
             // add the new operation replacing the old one
@@ -186,12 +187,13 @@ static bool LoadThumbs = YES;
                 if (bOpr.isCancelled) return;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     // display image in imageview
-                    imgView.hidden = NO;
-                    imgView.alpha = 0;
-                    imgView.image = [photo performSelector:getterSelector];
-                    [UIView animateWithDuration:0.3f animations:^{
-                        imgView.alpha = 1;
-                    }];
+                    [CATransaction setDisableActions:YES];
+                    thumbLayer.hidden = NO;
+                    thumbLayer.imageLayer.contents = (id)[[photo performSelector:getterSelector] CGImage];
+                    thumbLayer.opacity = 0;
+                    [CATransaction setDisableActions:NO];
+                    thumbLayer.opacity = 1;
+                    [CATransaction setDisableActions:YES];
                 });
             }];
             if(oldOperation && !oldOperation.isFinished){
